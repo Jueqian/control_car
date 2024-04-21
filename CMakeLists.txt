@@ -43,7 +43,7 @@ include_directories(
 add_executable(control_car src/control_car.cpp src/canusb.cpp)
 target_link_libraries(control_car ${catkin_LIBRARIES})
 
-add_executable(game_controller_simulate src/controll_test.cpp)
+add_executable(game_controller_simulate src/joy_controller_simulate.cpp)
 target_link_libraries(game_controller_simulate ${catkin_LIBRARIES})
 
 add_executable(usart_RemoteSend src/usart_RemoteSend.cpp)

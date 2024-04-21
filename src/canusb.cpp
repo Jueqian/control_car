@@ -14,6 +14,7 @@
 #include <sys/time.h>
 #include <iostream>
 
+
 // 发送数据间隙时间： 默认200ms
 #define CANUSB_INJECT_SLEEP_GAP_DEFAULT 200 /* ms */
 // 发送波特率，这里不是CAN通信的波特率哦
@@ -597,13 +598,15 @@ char *tty_device = NULL, *inject_data = NULL, *inject_id = NULL;
 CANUSB_SPEED speed = CANUSB_SPEED_500000;
 int baudrate = CANUSB_TTY_BAUD_RATE_DEFAULT;
 
+
 // 设置can相关参数
 int set_can(bool print_traffic_, char *tty_device_, int canusb_int_speed_, int baudrate_,
             float gap_time_, int can_mode_)
 {
-    signal(SIGTERM, sigterm);
-    signal(SIGHUP, sigterm);
-    signal(SIGINT, sigterm);
+    // xxd: 注册signal函数信号
+    signal(SIGTERM, sigterm);    // xxd: sigterm信号：终止进程时发送给程序的终止信号，以便进程进行一些清理工作后优雅退出
+    signal(SIGHUP, sigterm);    // xxd: 当终端不再对本进程控制时触发。（也就是按ctrl+z挂起后触发）
+    // signal(SIGINT, sigterm);    // xxd: SIGINT是键盘中断信号，按下ctrl+c触发，但是这里会导致程序卡死不易退出，所以注释掉了，不知道是否和ros有关。
 
     if (print_traffic_)
         print_traffic++;

@@ -5,6 +5,8 @@
 #include <sstream>
 #include <algorithm>
 
+#include <unistd.h>
+
 double PI = 3.141592654;
 double right_vel = 0.0;
 double left_vel = 0.0;
@@ -237,5 +239,12 @@ int main(int argc, char **argv)
 
     ros::spin();
 
+    for (int i = 0; i < 1; i++)
+    {
+        left_vel = 0;
+        right_vel = 0;
+        control_wheel();
+    }
+    
     return 0;
 }
