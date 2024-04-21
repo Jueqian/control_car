@@ -1,0 +1,49 @@
+<launch>
+  <!-- USB转CAN通信的一些参数 -->
+  <param name="width_robot" type="double" value="0.605" />
+  <param name="width_wheel" type="double" value="0.38" />
+  <param name="gap_time" type="double" value="0.5" /> 
+  <param name="print_traffic" type="bool" value="true" />
+  <param name="tty_device" type="string" value="/dev/ttyUSB0" />
+  <param name="canusb_int_speed" type="int" value="500000" />
+  <param name="baudrate" type="int" value="115200" />
+
+  <!-- 手柄控制的一些参数 -->
+  <param name="xbox_path" type="string" value="/dev/input/js0" />
+  <param name="vel_x_scale" type="double" value="4.0" />
+  <param name="ang_z_scale" type="double" value="12.8" />
+
+
+
+
+  <!-- control_car.cpp、canusb.cpp -->
+  <node name="control_car" pkg="control_car" type="control_car">
+    <remap from="/car/cmd_vel" to="/cmd_vel" />
+  </node>
+
+  <!-- controll_test.cpp -->
+  <node name="hand_bar" pkg="control_car" type="game_controller_simulate" output="screen">
+    <remap from="/car/cmd_vel" to="/cmd_vel" />
+  </node>
+
+  <!--node 
+      name属性可以随便定义，只需要名字标识唯一即可；
+      pkg 是功能包名，不能乱写
+      type 属性用与指定使用的可执行文件，这个值需要和CMakeLists.txt里面的add_executable对应。 
+  -->
+
+  <!-- send device need open this -->
+  <!-- <node name="usart_RemoteSend" pkg="control_car" type="usart_RemoteSend" output="screen">
+    <param name="tty_device_Remote" type="string" value="/dev/ttyUSB0"/>		
+    <param name="baudrate_Remote" type="int" value="57600"/>	
+  </node> -->
+
+  <!-- receive device (car) need to open this -->
+  <!-- <node name="usart_RemoteReceive" pkg="control_car" type="usart_RemoteReceive" output="screen">
+    <param name="tty_device_Remote" type="string" value="/dev/ttyUSB1"/>		
+    <param name="baudrate_Remote" type="int" value="57600"/>	
+    <remap from="/car/cmd_vel_Remote" to="/cmd_vel_Remote" />
+  </node> -->
+
+
+</launch>
